@@ -21,7 +21,6 @@ func (tc *TestCash) AppendNumberInCash(newNum string) error {
 }
 
 func (tc *TestCash) ReadNumbersFromCash() (string, error) {
-
 	mapInString := createKeyValuePairs(tc.Testmap)
 	return mapInString, nil
 }

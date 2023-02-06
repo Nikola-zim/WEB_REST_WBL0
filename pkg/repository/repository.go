@@ -10,6 +10,11 @@ type Authorization interface {
 	GetUser(username, password string) (WEB_REST_exm0302.User, error)
 }
 
+type DBJsonRW interface {
+	WriteInDB(inputJson WEB_REST_exm0302.Json) error
+	ReadFromDB()
+}
+
 type TodoList interface {
 }
 
@@ -18,6 +23,7 @@ type TodoItem interface {
 
 type Repository struct {
 	Authorization
+	DBJsonRW
 	TodoList
 	TodoItem
 }
@@ -26,5 +32,6 @@ type Repository struct {
 func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{
 		Authorization: NewAuthPostgres(db),
+		DBJsonRW:      NewJsonPostgres(db),
 	}
 }

@@ -22,11 +22,18 @@ type CashNumbers interface {
 	ReadNumbersFromCash() (string, error)
 }
 
+type JsonRW interface {
+	WriteInCash(inputJson WEB_REST_exm0302.Json) error
+	ReadFromCash(id uint64) (WEB_REST_exm0302.Json, error)
+	WriteInDB(inputJson WEB_REST_exm0302.Json) error
+}
+
 type Service struct {
 	Authorization
 	TodoList
 	TodoItem
 	CashNumbers
+	JsonRW
 }
 
 func NewService(repos *repository.Repository, testCash *cash.Cash) *Service {
@@ -34,5 +41,6 @@ func NewService(repos *repository.Repository, testCash *cash.Cash) *Service {
 		//Передаём интерфейсы
 		Authorization: NewAuthService(repos.Authorization),
 		CashNumbers:   NewCashService(testCash.NumbersRW),
+		JsonRW:        NewJsonService(testCash.CashJsonRW, repos.DBJsonRW),
 	}
 }

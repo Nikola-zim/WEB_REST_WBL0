@@ -7,11 +7,11 @@ import (
 
 // Названия таблиц из БД
 const (
-	usersTable      = "users"
-	todoListsTable  = "todo_lists"
-	usersListsTable = "users_lists"
-	todoItemsTable  = "todo_items"
-	listsItemsTable = "lists_items"
+	usersTable         = "users"
+	orderMainInfoTable = "order_main_info"
+	usersListsTable    = "users_lists"
+	todoItemsTable     = "todo_items"
+	listsItemsTable    = "lists_items"
 )
 
 type Config struct {

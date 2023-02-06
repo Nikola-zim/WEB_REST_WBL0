@@ -44,6 +44,12 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		}
 
 	}
+	testJson := router.Group("/test_json")
+	{
+		testJson.GET("/readId", h.readId)
+		testJson.POST("/write", h.writeJson)
+		testJson.POST("/showJson", h.showJson)
+	}
 
 	test := router.Group("/test")
 	{
