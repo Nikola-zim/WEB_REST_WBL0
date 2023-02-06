@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{.block_title}}</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="hero__window">
+            <div class="hero__window-align">
+                <form method="post" action="postform">
+                    <h3>Вывод JSON по id</h3>
+                    <label for="json_id"></label>
+                    <input id="json_id" name="json_id" type="number" placeholder="Введите id">
+                    <input type="submit" value="Найти" />
+                </form>
+                <textarea class="hero__window__outputarea">{{.block_output}}</textarea>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
