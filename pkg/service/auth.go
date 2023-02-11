@@ -1,8 +1,8 @@
 package service
 
 import (
-	"WEB_REST_exm0302"
 	"WEB_REST_exm0302/pkg/repository"
+	"WEB_REST_exm0302/static"
 	"crypto/sha1"
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
@@ -15,7 +15,6 @@ const (
 	tokenTTL   = 12 * time.Hour
 )
 
-// дополнить стандартный claims с id пользователя
 type tokenClaims struct {
 	jwt.StandardClaims
 	UserId int `json:"user_id"`
@@ -31,7 +30,7 @@ func NewAuthService(repo repository.Authorization) *AuthService {
 }
 
 // Передаем структуру в репозиторий
-func (s *AuthService) CreateUser(user WEB_REST_exm0302.User) (int, error) {
+func (s *AuthService) CreateUser(user static.User) (int, error) {
 	user.Password = generatePasswordHash(user.Password)
 	return s.repo.CreateUser(user)
 }

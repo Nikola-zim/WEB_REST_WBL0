@@ -1,14 +1,14 @@
 package handler
 
 import (
-	"WEB_REST_exm0302"
+	"WEB_REST_exm0302/static"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
 func (h *Handler) signUp(c *gin.Context) {
 	//структура в которой будем записывать данные из json от пользователей
-	var input WEB_REST_exm0302.User
+	var input static.User
 
 	if err := c.BindJSON(&input); err != nil {
 		newErrorResponse(c, http.StatusBadRequest, "invalid input body") //StatusBadRequest = 400 "некоректные данные"

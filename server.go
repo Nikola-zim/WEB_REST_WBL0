@@ -1,7 +1,10 @@
 package WEB_REST_exm0302
 
 import (
+	"WEB_REST_exm0302/pkg/mynats"
+	//"WEB_REST_exm0302/pkg/mynats"
 	"context"
+	"fmt"
 	"net/http"
 	"time"
 )
@@ -10,7 +13,15 @@ type Server struct {
 	httpServer *http.Server
 }
 
-func (s *Server) Run(port string, handler http.Handler) error {
+func ContinuousPrint() {
+	for {
+		fmt.Println("Constant print")
+		time.Sleep(3000 * time.Millisecond)
+	}
+}
+
+// , subNats *mynats.SubsNats
+func (s *Server) Run(port string, handler http.Handler, subNats *mynats.SubsNats) error {
 	s.httpServer = &http.Server{
 		Addr:           ":" + port,
 		Handler:        handler,
@@ -18,6 +29,9 @@ func (s *Server) Run(port string, handler http.Handler) error {
 		ReadTimeout:    10 * time.Second,
 		WriteTimeout:   10 * time.Second,
 	}
+
+	//Получение по mynats и отправка Json сервису для записи
+	go subNats.GetAndWriteJson()
 
 	return s.httpServer.ListenAndServe()
 }

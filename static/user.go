@@ -1,4 +1,4 @@
-package WEB_REST_exm0302
+package static
 
 type User struct {
 	Id       int    `json:"-" db:"id"`

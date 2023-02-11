@@ -1,6 +1,8 @@
 package cash
 
-import "WEB_REST_exm0302"
+import (
+	"WEB_REST_exm0302/static"
+)
 
 type NumbersRW interface {
 	AppendNumberInCash(newNum string) error
@@ -8,8 +10,8 @@ type NumbersRW interface {
 }
 
 type CashJsonRW interface {
-	WriteInCash(inputJson WEB_REST_exm0302.Json) error
-	ReadFromCash(id uint64) (WEB_REST_exm0302.Json, error)
+	WriteInCash(inputJson static.Json) error
+	ReadFromCash(id string) (static.Json, error)
 }
 
 type Cash struct {

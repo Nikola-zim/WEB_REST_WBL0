@@ -6,10 +6,12 @@ CREATE TABLE users
     password_hash varchar(255) not null
 );
 
-CREATE TABLE order_main_info
+CREATE TABLE IF NOT EXISTS order_main_info
 (
-    id                 serial       not null unique,
-    order_uid          varchar(19)  not null,
+--     id                 serial       not null unique,
+    order_uid          varchar(19)  not null
+        constraint orders_uid_pkey
+            primary key,
     track_number       varchar(255) not null,
     entry              varchar(255),
     locale             varchar(5)   not null,
@@ -22,23 +24,24 @@ CREATE TABLE order_main_info
     oof_shard          varchar(255) not null
 );
 
+
 CREATE TABLE delivery
 (
-    id       serial                                                not null unique,
-    order_id int references order_main_info (id) on delete cascade not null,
-    name     varchar(255)                                          not null,
-    phone    varchar(15),
-    zip      varchar(30)                                           not null,
-    city     varchar(255)                                          not null,
-    address  varchar(255)                                          not null,
-    region   varchar(255),
-    email    varchar(255)
+--     id       serial                                                not null unique,
+    delivery_id varchar(19) references order_main_info (order_uid) on delete cascade not null,
+    name        varchar(255)                                                         not null,
+    phone       varchar(15),
+    zip         varchar(30)                                                          not null,
+    city        varchar(255)                                                         not null,
+    address     varchar(255)                                                         not null,
+    region      varchar(255),
+    email       varchar(255)
 );
 
 CREATE TABLE payment
 (
-    id       serial                                                not null unique,
-    payment_id int references order_main_info (id) on delete cascade not null,
+--     id            serial                                                               not null unique,
+    payment_id    varchar(19) references order_main_info (order_uid) on delete cascade not null,
     transaction   varchar(255),
     request_id    varchar(255),
     currency      varchar(10),
@@ -53,8 +56,8 @@ CREATE TABLE payment
 
 CREATE TABLE items
 (
-    id       serial                                                not null unique,
-    item_id int references order_main_info (id) on delete cascade not null,
+--     id           serial                                                               not null unique,
+    item_id      varchar(19) references order_main_info (order_uid) on delete cascade not null,
     chrt_id      integer,
     track_number varchar(255),
     price        integer,
@@ -67,33 +70,4 @@ CREATE TABLE items
     brand        varchar(255),
     status       integer
 
-);
-
-CREATE TABLE todo_lists
-(
-    id          serial       not null unique,
-    title       varchar(255) not null,
-    description varchar(255)
-);
-
-CREATE TABLE users_lists
-(
-    id      serial                                           not null unique,
-    user_id int references users (id) on delete cascade      not null,
-    list_id int references todo_lists (id) on delete cascade not null
-);
-
-CREATE TABLE todo_items
-(
-    id          serial       not null unique,
-    title       varchar(255) not null,
-    description varchar(255),
-    done        boolean      not null default false
-);
-
-CREATE TABLE lists_items
-(
-    id      serial                                           not null unique,
-    item_id int references todo_items (id) on delete cascade not null,
-    list_id int references todo_lists (id) on delete cascade not null
 );

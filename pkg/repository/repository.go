@@ -1,18 +1,18 @@
 package repository
 
 import (
-	"WEB_REST_exm0302"
+	"WEB_REST_exm0302/static"
 	"github.com/jmoiron/sqlx"
 )
 
 type Authorization interface {
-	CreateUser(user WEB_REST_exm0302.User) (int, error)
-	GetUser(username, password string) (WEB_REST_exm0302.User, error)
+	CreateUser(user static.User) (int, error)
+	GetUser(username, password string) (static.User, error)
 }
 
 type DBJsonRW interface {
-	WriteInDB(inputJson WEB_REST_exm0302.Json) error
-	ReadFromDB()
+	WriteInDB(inputJson static.Json) error
+	ReadAllFromDB() (map[string]static.Json, error)
 }
 
 type TodoList interface {

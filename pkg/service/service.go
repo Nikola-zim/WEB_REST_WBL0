@@ -1,13 +1,13 @@
 package service
 
 import (
-	"WEB_REST_exm0302"
 	"WEB_REST_exm0302/pkg/cash"
 	"WEB_REST_exm0302/pkg/repository"
+	"WEB_REST_exm0302/static"
 )
 
 type Authorization interface {
-	CreateUser(user WEB_REST_exm0302.User) (int, error)
+	CreateUser(user static.User) (int, error)
 	GenerateToken(username, password string) (string, error)
 }
 
@@ -23,9 +23,12 @@ type CashNumbers interface {
 }
 
 type JsonRW interface {
-	WriteInCash(inputJson WEB_REST_exm0302.Json) error
-	ReadFromCash(id uint64) (WEB_REST_exm0302.Json, error)
-	WriteInDB(inputJson WEB_REST_exm0302.Json) error
+	WriteInCash(inputJson static.Json) error
+	ReadFromCash(id string) (static.Json, error)
+	WriteInDB(inputJson static.Json) error
+	WriteNatsJsonInCash([]byte) error
+	WriteNatsJsonInDB([]byte) error
+	RecoverCash() error
 }
 
 type Service struct {

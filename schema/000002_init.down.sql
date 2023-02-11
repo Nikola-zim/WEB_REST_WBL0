@@ -1,11 +1,10 @@
-DROP TABLE lists_items;
 
-DROP TABLE users_lists;
 
-DROP TABLE todo_lists;
+DROP TABLE order_main_info CASCADE;
 
-DROP TABLE users;
+DROP TABLE delivery CASCADE;
 
-DROP TABLE todo_items;
+DROP TABLE payment CASCADE;
 
-DROP TABLE order_main_info;
+DROP TABLE items CASCADE;
+

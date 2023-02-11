@@ -4,6 +4,7 @@ import (
 	"WEB_REST_exm0302"
 	"WEB_REST_exm0302/pkg/cash"
 	"WEB_REST_exm0302/pkg/handler"
+	"WEB_REST_exm0302/pkg/mynats"
 	"WEB_REST_exm0302/pkg/repository"
 	"WEB_REST_exm0302/pkg/service"
 	"github.com/joho/godotenv"
@@ -37,17 +38,22 @@ func main() {
 		logrus.Fatalf("failed to initialize db: %s", err.Error())
 	}
 
-	//test_cash := cash.NewTestCash()
-	//Test.Testmap["init"] = "init"
 	testCash := cash.NewCashTest()
 	repos := repository.NewRepository(db)
 	services := service.NewService(repos, testCash)
 	handlers := handler.NewHandler(services)
+	subsNats := mynats.NewSubsNats(services)
 
+	errRecovery := services.RecoverCash()
+	if errRecovery != nil {
+		logrus.Fatalf("Ошибка восстановления кеша: %s", errRecovery)
+	}
 	srv := new(WEB_REST_exm0302.Server)
-	if err := srv.Run(viper.GetString("port"), handlers.InitRoutes()); err != nil {
+
+	if err := srv.Run(viper.GetString("port"), handlers.InitRoutes(), subsNats); err != nil {
 		logrus.Fatalf("error occured while running http server")
 	}
+
 }
 
 func initConfig() error {

@@ -1,11 +1,10 @@
 package handler
 
 import (
-	"WEB_REST_exm0302"
+	"WEB_REST_exm0302/static"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"strconv"
 )
 
 func (h *Handler) readId(c *gin.Context) {
@@ -17,16 +16,18 @@ func (h *Handler) readId(c *gin.Context) {
 func (h *Handler) showJson(c *gin.Context) {
 	desiredJsonId := c.PostForm("json_id")
 	if desiredJsonId == "" {
-		newErrorResponse(c, http.StatusBadRequest, "invalid input body") //StatusBadRequest = 400 "некоректные данные"
-		return
+		c.HTML(http.StatusOK, "test_json.html", gin.H{
+			"errors_block": "Ошибка! Пожалуйста, введите id",
+		})
 	}
 
-	var myid uint64
-	myid, _ = strconv.ParseUint(desiredJsonId, 0, 0)
-	myTestMap, err := h.services.JsonRW.ReadFromCash(myid)
+	//var myid uint64
+	//myid, _ = strconv.ParseUint(desiredJsonId, 0, 0)
+	myTestMap, err := h.services.JsonRW.ReadFromCash(desiredJsonId)
 	if err != nil {
-		newErrorResponse(c, http.StatusInternalServerError, err.Error()) //Код 500 - ошибка сервера
-		return
+		c.HTML(http.StatusOK, "test_json.html", gin.H{
+			"errors_block": "Ошибка! Такого id не существует",
+		})
 	}
 	myTestMap2, _ := json.Marshal(myTestMap)
 	c.HTML(http.StatusOK, "test_json.html", gin.H{
@@ -34,9 +35,10 @@ func (h *Handler) showJson(c *gin.Context) {
 	})
 }
 
+// Функция для тестирования ввода json через http запрос
 func (h *Handler) writeJson(c *gin.Context) {
 	//структура в которой будем записывать данные из json
-	var inputJson WEB_REST_exm0302.Json
+	var inputJson static.Json
 
 	//Проверка на нужный формат Json
 	if err := c.BindJSON(&inputJson); err != nil {

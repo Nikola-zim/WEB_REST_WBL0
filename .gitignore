@@ -1,3 +1,5 @@
 .idea
 
 .env
+
+cmd/publisher/pub.env

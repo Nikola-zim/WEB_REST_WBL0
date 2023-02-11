@@ -12,9 +12,10 @@
             <form method="post" action="showJson">
                 <h3>Вывод JSON по id</h3>
                 <label for="json_id"></label>
-                <input id="json_id" name="json_id" type="number" placeholder="Введите id">
+                <input id="json_id" name="json_id" type="text" placeholder="Введите id">
                 <input type="submit" value="Найти" />
-            </form>
+            </form><br>
+            {{.errors_block}}<br>
             <textarea class="hero__window__outputarea">{{.block_output}}</textarea>
         </div>
     </div>
