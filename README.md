@@ -8,5 +8,5 @@
 - самого nats-streaming-server, который запускался отдельно (проект по ссылке в дополнительных материалах)
 ## Дополнительные материалы
 Демонстрация работы: https://youtu.be/Z4PWYY9EVRA  
-База данных Postgres версии 13.3 (запускался контейнер в Docker)
+База данных Postgres версии 13.3 (запускался контейнер в Docker)  
 Nats-streaming: https://github.com/nats-io/nats-streaming-server.git  
